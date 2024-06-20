@@ -1,0 +1,38 @@
+{% extends 'core1/base.html' %}
+{% block title %}
+Home
+{% endblock title %} 
+
+{% block main %}
+<h3>CRUD PROJECT IN DJANG </h3>
+<table>
+    <thead>
+        <a href="{% url 'add-student' %}" class="btn btn-primary">Add New Students</a>
+        <tr>
+            <th scope="col"># | </th>
+            <th scope="col">Name | </th>
+            <th scope="col">Roll | </th>
+            <th scope="col">City | </th>
+            <th scope="col">Actions | </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for student in stu_data %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{student.name}}</td>
+            <td>{{student.roll}}</td>
+            <td>{{student.city}}</td>
+            <td>
+                    <form action="{% url 'del-student' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value={{student.id}}>                           
+                        <input type="submit" value="Delete" class="btn btn-danger btn-sm">
+                    </form>
+                    <a href="{% url 'editing' student.id %}" class="btn btn-info btn-sm">Edit</a>
+                  </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock main %} 
